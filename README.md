@@ -10,11 +10,13 @@
 
 An (almost) nude boilerplate with Next App router, SCSS Module, GSAP Lenis and some utils.
 
+---
 
-### How to install
 
+## How to install
 Just clone it then and run <code>pnpm dev</code>!
 
+--- 
 ### Packages included
 - `@cher-ami/utils` 1.4.1
 - `@gsap/react` 2.1.2
@@ -32,7 +34,11 @@ Just clone it then and run <code>pnpm dev</code>!
 ### Useful commands
 - `pnpm scaffold` to create some components faaaast
 
+---
+#### Want to install payload ?
+Clone it and run <code>npx create-payload-app</code>!
 
-## Questions or fork
+---
+## Questions or forks
 
 If you have any issues or questions, feel free to fork or send me a message.
