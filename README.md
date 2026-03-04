@@ -10,7 +10,7 @@
 
 # [Nud3] Boilerplate
 
-An (almost) nude boilerplate with Next App router, SCSS Module, GSAP Lenis integrated and some utils.
+An (almost) nude boilerplate with Next App router, SCSS Module, GSAP Lenis and some utils.
 
 
 ### How to install

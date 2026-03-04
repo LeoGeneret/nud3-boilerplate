@@ -1,7 +1,7 @@
 {
   "name": "nud3-boilerplate",
   "version": "1.0.0",
-  "description": "NextJS boilerplate with TypeScript, ESLint, SCSS Modules and Lenis",
+  "description": "An (almost) nude boilerplate with Next App router, SCSS Module, GSAP Lenis and some utils.",
   "license": "MIT",
   "type": "module",
   "scripts": {
