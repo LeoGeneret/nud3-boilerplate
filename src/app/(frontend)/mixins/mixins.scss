@@ -1,0 +1,187 @@
+/**
+ * @credits Original work by Alexis Bouhet - https://zouloux.com
+ */
+
+// ----------------------------------------------------------------------------- TOOLS
+
+/**
+ * Debug an element with an outline with custom size and color.
+ */
+@mixin debug($size: 1px, $color: red) {
+  outline: $size solid $color;
+}
+
+// ----------------------------------------------------------------------------- BACKGROUNDS
+
+/**
+ * Set quick and dirty back gradient.
+ */
+@mixin gradient($startColor: #000, $endColor: #fff, $deg: to bottom) {
+  background: linear-gradient($deg, $startColor, $endColor);
+}
+
+/**
+ * Center a video in its parent.
+ * Equivalent to the 'cover' background position but for video
+ */
+@mixin videoBackground {
+  @include absoluteCenter;
+  @include size(auto);
+  @include minSize(100%, 100%);
+}
+
+// ----------------------------------------------------------------------------- IMAGES
+
+/**
+ * Disable antialias on img tag.
+ */
+@mixin disableAntialias {
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+// ----------------------------------------------------------------------------- POSITION AND SIZE
+
+@mixin absoluteCenter($axis: yx) {
+  @if $axis == yx {
+    @include topLeft(50%, 50%);
+    transform: translate(-50%, -50%);
+  } @else if $axis == y {
+    @include topLeft(50%, auto);
+    transform: translateY(-50%);
+  } @else if $axis == x {
+    @include topLeft(auto, 50%);
+    transform: translateX(-50%);
+  }
+}
+
+@mixin place($top: auto, $right: auto, $bottom: auto, $left: auto, $position: absolute) {
+  @if $position != null {
+    position: $position;
+  }
+  @if $top != null {
+    top: $top;
+  }
+  @if $right != null {
+    right: $right;
+  }
+  @if $bottom != null {
+    bottom: $bottom;
+  }
+  @if $left != null {
+    left: $left;
+  }
+}
+
+@mixin flex($display: flex, $direction: row, $wrap: wrap, $justifyContent: flex-start, $alignItems: flex-start, $firstChildGutter: 0) {
+  display: $display;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+  justify-content: $justifyContent;
+  align-items: $alignItems;
+  @if $firstChildGutter > 0 {
+    margin-left: -$firstChildGutter;
+  }
+}
+
+@mixin topLeft($top: auto, $left: auto, $position: absolute) {
+  position: $position;
+  top: $top;
+  left: $left;
+}
+
+@mixin size($width: auto, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+@mixin minSize($width: none, $height: $width) {
+  min-width: $width;
+  min-height: $height;
+}
+
+@mixin maxSize($width: none, $height: $width) {
+  max-width: $width;
+  max-height: $height;
+}
+
+@mixin hideScrollBar {
+  overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
+// ----------------------------------------------------------------------------- SELECTION
+
+@mixin disableSelection {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@mixin enableSelection {
+  -webkit-user-select: all;
+  -khtml-user-select: all;
+  -moz-user-select: all;
+  -ms-user-select: all;
+  user-select: all;
+}
+
+// ----------------------------------------------------------------------------- SCROLLS
+
+@mixin scrollPatch {
+  overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
+@mixin showScrollBar {
+  -ms-overflow-style: scrollbar;
+  &::-webkit-scrollbar {
+    width: auto;
+    height: auto;
+  }
+}
+
+// ----------------------------------------------------------------------------- FONTS
+
+@mixin fontSmooth {
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+// ----------------------------------------------------------------------------- TRANSITIONS
+
+@mixin transitions($propsList, $speed: 200ms, $ease: ease-out, $delay: 0s) {
+  @each $prop in $propsList {
+    transition: $prop $speed $ease $delay;
+  }
+}
+
+// ----------------------------------------------------------------------------- HIDERS
+
+@mixin visuallyHidden {
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+}

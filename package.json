@@ -1,0 +1,53 @@
+{
+  "name": "[NUD3] boilerplate",
+  "version": "1.0.0",
+  "description": "NextJS boilerplate with TypeScript, ESLint, SCSS Modules and Lenis",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "scaffold": "node config/tasks/scaffold-component/scaffold-component.mjs"
+  },
+  "dependencies": {
+    "@cher-ami/utils": "^1.4.1",
+    "@gsap/react": "^2.1.2",
+    "change-case": "^5.4.4",
+    "cross-env": "^7.0.3",
+    "graphql": "^16.8.1",
+    "gsap": "^3.13.0",
+    "inquirer": "^12.6.3",
+    "lenis": "^1.3.17",
+    "next": "16.1.6",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "sharp": "0.32.6"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
+    "@types/node": "^22.5.4",
+    "@types/react": "19.2.11",
+    "@types/react-dom": "19.2.3",
+    "eslint": "^9.16.0",
+    "eslint-config-next": "16.1.6",
+    "prettier": "^3.4.2",
+    "sass": "^1.89.0",
+    "typescript": "5.7.3"
+  },
+  "engines": {
+    "node": "^18.20.2 || >=20.9.0",
+    "pnpm": "^9 || ^10"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ],
+    "overrides": {
+      "@types/react": "19.2.11",
+      "@types/react-dom": "19.2.3"
+    }
+  }
+}

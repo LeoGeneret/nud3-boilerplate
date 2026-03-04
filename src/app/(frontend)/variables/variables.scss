@@ -1,0 +1,33 @@
+// ----------------------------------------------------------------------------- SCSS VAR
+
+/**
+  SCSS variables
+  Only modify vars below, but don't add new ones.
+  Add native CSS vars instead in CSS VAR below.
+*/
+
+
+// Colors
+$color-blue-night: #01013d;
+$color-purple-0: #6863b9;
+$color-purple: #9c96f0;
+$color-purple-light: #beafef;
+$color-purple-dark: #9a93d3;
+$color-white: #ffffff;
+$color-green: #0EA433;
+$color-pure-black: #000;
+$color-grey: #f5f5f5;
+$color-yellow: #d9c97d;
+
+// Grid
+$grid-column-number: 8;
+$grid-gutter-size: 24;
+$grid-max-width: 1024px;
+
+// Transitions
+$transitions-default-speed: 300ms;
+$transitions-default-ease: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+$gap-between-posts: 60rem;
+
+

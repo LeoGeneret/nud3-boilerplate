@@ -1,0 +1,7 @@
+@use "../../references" as *;
+
+.root {
+}
+
+.wrapper {
+}

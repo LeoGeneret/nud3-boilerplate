@@ -1,0 +1,149 @@
+import Inquirer from 'inquirer'
+import { camelCase, pascalCase } from 'change-case'
+import createFile from '../../helpers/create-file.mjs'
+import config from '../../config.mjs'
+import logs from '../../helpers/logger.mjs'
+
+// ----------------------------------------------------------------------------- PRIVATE API
+
+const _askWhichComponentFolder = componentCompatibleFolders => {
+  return Inquirer.prompt({
+    type: 'list',
+    name: 'subFolder',
+    message: 'Which component folder?',
+    choices: componentCompatibleFolders,
+  })
+}
+
+const _askComponentName = () => {
+  return Inquirer.prompt({
+    type: 'input',
+    message: 'Component name?',
+    name: 'componentName',
+  })
+}
+
+/**
+ * React Component Builder
+ */
+const _reactComponentBuilder = async ({
+                                        subFolder,
+                                        componentPath,
+                                        upperComponentName,
+                                        componentsTemplatesDir,
+                                      }) => {
+  // choose between page and component type
+  const componentType = subFolder === 'pages' ? 'page' : 'component'
+  // scaffold component file
+  await createFile({
+    templateFilePath: `${componentsTemplatesDir}/react/${componentType}.tsx.template`,
+    destinationFilePath: `${componentPath}/${upperComponentName}.tsx`,
+    replaceExpressions: { upperComponentName },
+  })
+  // scaffold scss module
+  await createFile({
+    templateFilePath: `${componentsTemplatesDir}/react/component.scss.template`,
+    destinationFilePath: `${componentPath}/${upperComponentName}.module.scss`,
+    replaceExpressions: { upperComponentName },
+  })
+}
+
+/**
+ * DOM Component builder
+ */
+const _domComponentBuilder = async ({
+                                      componentPath,
+                                      upperComponentName,
+                                      componentsTemplatesDir,
+                                      twigComponentPath,
+                                    }) => {
+  // scaffold component file
+  await createFile({
+    templateFilePath: `${componentsTemplatesDir}/dom/component.ts.template`,
+    destinationFilePath: `${componentPath}/${upperComponentName}.ts`,
+    replaceExpressions: { upperComponentName },
+  })
+  // scaffold scss module
+  await createFile({
+    templateFilePath: `${componentsTemplatesDir}/dom/component.scss.template`,
+    destinationFilePath: `${componentPath}/${upperComponentName}.scss`,
+    replaceExpressions: { upperComponentName },
+  })
+  // scaffold Twig
+  await createFile({
+    templateFilePath: `${componentsTemplatesDir}/dom/component.twig.template`,
+    destinationFilePath: `${twigComponentPath}/${upperComponentName}.twig`,
+    replaceExpressions: { upperComponentName },
+  })
+}
+
+/**
+ * @name index
+ * @description Ask question and scaffold a component with a specific script template
+ */
+const _scaffoldComponent = ({
+                              srcDir,
+                              pComponentType, // dom | react
+                              componentCompatibleFolders,
+                              componentsTemplatesDir,
+                            }) => {
+  return new Promise(async resolve => {
+    // Get sub-folder
+    let subFolder = ''
+    await _askWhichComponentFolder(componentCompatibleFolders).then(
+      answer => (subFolder = answer.subFolder),
+    )
+
+    // Get component name
+    let componentName = ''
+    await _askComponentName().then(answer => {
+      componentName = answer.componentName
+    })
+
+    // formatted name "lowerCase"
+    let lowerComponentName = camelCase(componentName)
+    // formatted name "UpperCase"
+    let upperComponentName = pascalCase(componentName)
+    // Base path of the component (no extension at the end here)
+    let componentPath = `${srcDir}/${subFolder}/${lowerComponentName}`
+    let twigComponentPath = `${config.twigTemplates}/${subFolder}`
+    // build REACT component
+    if (pComponentType === 'react') {
+      await _reactComponentBuilder({
+        subFolder,
+        upperComponentName,
+        componentPath,
+        componentCompatibleFolders,
+        componentsTemplatesDir,
+      })
+    }
+
+    // build DOM component
+    if (pComponentType === 'dom') {
+      await _domComponentBuilder({
+        upperComponentName,
+        componentPath,
+        twigComponentPath,
+        componentCompatibleFolders,
+        componentsTemplatesDir,
+      })
+    }
+
+    // final log
+    logs.done('Component created.')
+    resolve()
+  })
+}
+
+// ----------------------------------------------------------------------------- PUBLIC
+
+const scaffoldComponent = () => {
+  _scaffoldComponent({
+    pComponentType: 'react',
+    componentCompatibleFolders: config.componentCompatibleFolders,
+    componentsTemplatesDir: config.componentsTemplatesDir,
+    srcDir: config.srcDir,
+  })
+}
+
+scaffoldComponent()

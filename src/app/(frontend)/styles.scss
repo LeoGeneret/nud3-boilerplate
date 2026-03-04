@@ -1,0 +1,86 @@
+@use "mixins/ratio" as *;
+
+:root {
+  --font-mono: 'Roboto Mono', monospace;
+
+  // When you use --font-size var, 1px = 1rem
+  font-size: var(--font-size);
+
+  // DO NOT TOUCH
+  @include propertyViewport(--font-size, 1);
+
+
+  // breakpoints
+  --breakpoint-mobile: 320px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-laptop: 1024px;
+  --breakpoint-bigLaptop: 1440px;
+  --breakpoint-desktop: 1680px;
+
+  // Colors
+  --color-bg: transparent;
+  --color-pure-black: #000;
+  --color-grey: #b2b2b2;
+  --color-pure-white: $color-white;
+  --color-text: #000;
+  --color-green: $color-green;
+  // ...
+}
+
+* {
+  box-sizing: border-box;
+  cursor: none;
+  user-select: none;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+
+
+}
+
+button {
+  background: none;
+  border: none;
+  display: block;
+}
+
+
+html,
+body,
+#app {
+  height: 100%;
+  width: 100%;
+}
+
+.lenis {
+  overflow: hidden !important;
+}
+
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+main {
+  position: relative;
+
+  &.modal {
+    overflow: hidden;
+  }
+}

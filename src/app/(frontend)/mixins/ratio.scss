@@ -1,0 +1,104 @@
+@use "sass:meta";
+@use "sass:math";
+@use "sass:list";
+
+// Used by ratio
+$viewport-reference-width: 375;
+$viewport-reference-height: 667;
+$viewport-reference-desktop-width: 1512;
+$viewport-reference-desktop-height: 982;
+
+// Breakpoints
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-laptop: 1024px;
+$breakpoint-bigLaptop: 1440px;
+$breakpoint-desktop: 1680px;
+
+
+@function ratioVW($n1, $n2: $viewport-reference-width) {
+  @if meta.type-of($n1) == number {
+    @return math.div($n1, $n2) * 100vw;
+  }
+  @return $n1;
+}
+
+@function ratioVH($n1, $n2: $viewport-reference-height) {
+  @if meta.type-of($n1) == number {
+    $var: var(--vh, 1vh);
+    @return calc(#{math.div($n1, $n2)} * (#{$var} * 100));
+  }
+  @return $n1;
+}
+
+@mixin propertyVW($property, $values, $n2: $viewport-reference-width) {
+  @if meta.type-of($values) != "list" {
+    $values: ($values,);
+  }
+  $output: ();
+
+  @for $i from 1 through list.length($values) {
+    $output: list.append($output, ratioVW(list.nth($values, $i), $n2));
+  }
+
+  #{$property}: $output;
+}
+
+@mixin propertyVH($property, $values, $n2: $viewport-reference-height, $aspect-ratio: true) {
+  @if meta.type-of($values) != "list" {
+    $values: ($values,);
+  }
+  $output: ();
+
+  @for $i from 1 through list.length($values) {
+    $output: list.append($output, ratioVH(list.nth($values, $i), $n2));
+  }
+
+  #{$property}: $output;
+
+  @if $aspect-ratio {
+    $local-viewport-height: $viewport-reference-desktop-height + 1;
+    @media (max-aspect-ratio: #{$viewport-reference-desktop-width} / #{$local-viewport-height}) {
+      @include propertyVW($property, $values, $viewport-reference-desktop-width);
+    }
+  }
+}
+
+
+@mixin propertyViewport($property, $value1, $value2: $value1, $breakpoint: $breakpoint-tablet, $capValue: false, $aspect-ratio: true) {
+  @include propertyVW($property, $value1, $viewport-reference-width);
+
+  @media (min-width: $breakpoint) {
+    @include propertyVH($property, $value2, $viewport-reference-desktop-height, $aspect-ratio);
+  }
+
+  @if $capValue {
+    @media (min-width: $breakpoint-desktop) {
+      #{$property}: toPx($value2);
+    }
+  }
+}
+
+@mixin rem($property, $value-mobile, $value-desktop: false, $breakpoint: $breakpoint-tablet) {
+  #{$property}: ($value-mobile)+rem;
+
+  @if $value-desktop {
+    @media (min-width: $breakpoint) {
+      #{$property}: ($value-desktop)+rem;
+    }
+  }
+}
+
+@function toRem($value) {
+  @if meta.type-of($value) == number {
+    @return $value / 16 + rem;
+  }
+  @return $value;
+}
+
+@function toPx($value) {
+  @if meta.type-of($value) == number {
+    @return $value + px;
+  }
+  @return $value;
+}

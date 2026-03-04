@@ -1,0 +1,16 @@
+@mixin mobileOnly {
+  display: inherit !important;
+
+  @media screen and (min-width: $breakpoint-tablet) {
+    display: none !important;
+  }
+}
+
+
+@mixin desktopOnly {
+  display: none!important;
+
+  @media screen and (min-width: $breakpoint-tablet) {
+    display: inherit!important;
+  }
+}

@@ -1,0 +1,22 @@
+import React from "react";
+import css from "./%%upperComponentName%%.module.scss";
+import { cls } from "@cher-ami/utils"
+
+interface IProps {
+  className?: string
+}
+
+const componentName = "%%upperComponentName%%";
+
+/**
+ * @name %%upperComponentName%%
+ */
+function %%upperComponentName%% (props: IProps): React.JSX.Element {
+  return <div className={cls(css.root, props.className)}>
+      <div className={css.wrapper}>
+        {componentName}
+      </div>
+  </div>
+}
+
+export default %%upperComponentName%%
