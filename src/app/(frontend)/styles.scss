@@ -29,22 +29,11 @@
 
 * {
   box-sizing: border-box;
-  cursor: none;
-  user-select: none;
 }
 
 html {
   -webkit-font-smoothing: antialiased;
-
-
 }
-
-button {
-  background: none;
-  border: none;
-  display: block;
-}
-
 
 html,
 body,
@@ -75,12 +64,4 @@ html.lenis {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
-}
-
-main {
-  position: relative;
-
-  &.modal {
-    overflow: hidden;
-  }
 }
