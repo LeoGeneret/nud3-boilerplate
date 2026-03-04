@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import css from './page.module.scss'
 
 export default function Home() {

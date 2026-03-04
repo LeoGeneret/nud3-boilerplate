@@ -1,9 +1,9 @@
 import React from 'react'
-import ScrollRestoration from './ScrollRestoration'
 import { jost } from './fonts/fonts'
 import './styles.scss'
 import './normalize.scss'
 import type { Metadata } from 'next'
+import { ReactLenis, useLenis } from 'lenis/react'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -12,18 +12,15 @@ export const metadata: Metadata = {
 
 export default async function RootLayout(props: {
   children: React.ReactNode
-  modal: React.ReactNode
 }) {
-  const { children, modal } = props
+  const { children } = props
 
   return (
     <html lang="en" className={`${jost.variable}`}>
       <body>
+        <ReactLenis />
         <main>
-          <ScrollRestoration />
-          <div>
-            {children}
-          </div>
+          <div>{children}</div>
         </main>
       </body>
     </html>

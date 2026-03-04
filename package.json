@@ -1,5 +1,5 @@
 {
-  "name": "[NUD3] boilerplate",
+  "name": "nud3-boilerplate",
   "version": "1.0.0",
   "description": "NextJS boilerplate with TypeScript, ESLint, SCSS Modules and Lenis",
   "license": "MIT",
